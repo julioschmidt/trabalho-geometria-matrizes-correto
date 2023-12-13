@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Game</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="./index.js"></script>
+  <script src="./src/util.js"></script>
+  <script src="./src/tela.js"></script>
+  <script src="./src/jogoDaMemoria.js"></script>
+  <script src="./pontuacao.js"></script>
+  <script>
+    function zerarPontuacao() {
+      jogoDaMemoria.pontuacao = 0;
+    }
+  </script>
+
+  <style>
+    #pontuacao {
+      font-family: 'Arial', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #3498db;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: fit-content;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body class="container-fluid">
+  <h1 style="text-align: center;">Memória das Matrizes (Fase Inicial)</h1>
+  <br>
+  <div class="row" style="justify-content: right; margin-right: 5%;">
+    <div> <!-- Coluna para a pontuação, alinhada à direita para telas médias e maiores -->
+      <p id="pontuacao" class="text-center">Pontuação: 0</p>
+    </div>
+  </div>
+  <br>
+  <div id="carregando" class="row container-fluid invisible">
+    <strong id="contador">Começando em 1 ...</strong>
+    <div class="spinner-border text-warning spinner-border-sm" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <br>
+  <div id="conteudo" class="row">
+
+  </div>
+
+  <div  style="text-align: center;"> <!-- Coluna para os botões -->
+    <button type="button" class="btn btn-success" id="jogar" onclick="zerarPontuacao()">Clique aqui para iniciar</button>
+  </div>
+  <div  style="text-align: center; margin-top: 5px;"> <!-- Coluna para os botões -->
+    <button type="button" class="btn btn-danger" id="mostrarTudo">Mostrar tudo</button>
+  </div>
+
+  <div class="row container-fluid" style="display:flex; justify-content:right;">
+    <div id="mensagem" class="alert alert-success invisible" role="alert">
+      Combinação!!
+    </div>
+  </div>
+  
+</body>
+
+</html>
