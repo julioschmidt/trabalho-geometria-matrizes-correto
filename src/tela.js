@@ -22,7 +22,7 @@ const MENSAGENS = {
 class Tela {
   static obterCodigoHTML(item) {
     return `
-    <div class="col-md-3">
+    <div class="col-md-2">
       <div id=${item.id} class="card" style="width: 50%;" onclick="window.verificarSelecao('${item.id}', '${item.nome}')">
         <img src="${item.img}" name="${item.nome}" class="card-img-top" alt="...">
       </div>
@@ -57,9 +57,6 @@ class Tela {
   }
 
   static gerarStringHTMLPelaImagem(itens) {
-    //para cada item da lista vai executar a função obterCodigoHTML
-    // ao final, vai concatenar tudo em uma unica String
-    //muda de Array para String
     return itens.map(Tela.obterCodigoHTML).join('')
   }
   static atualizarImagens(itens){

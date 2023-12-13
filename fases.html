@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo das Matrizes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="./index.js"></script>
+  <script src="./src/util.js"></script>
+  <script src="./src/tela.js"></script>
+  <script src="./src/quizgame.js"></script>
+  <script src="./pontuacao.js"></script>
+  <script>
+    function zerarPontuacao() 
+    {
+      jogoDaMemoria.pontuacao = 0;
+    }
+
+    function escolherPergunta() {
+
+      var perguntaSorteada = Math.floor(Math.random() * 8) + 1;
+
+    }
+    
+  </script>
+
+  <style>
+    #pontuacao {
+      font-family: 'Arial', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #3498db;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: fit-content;
+      margin: 0 auto;
+    }
+    #timer {
+      font-family: 'Arial', sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #db3434;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-align: center;
+      width: fit-content;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body class="container-fluid">
+  <h1 style="text-align: center;" id="titulo">Quiz das Matrizes (Fase Inicial)</h1>
+  <br>
+  <div class="row" style="justify-content: right; margin-right: 5%;">
+    <div> <!-- Coluna para a pontuação, alinhada à direita para telas médias e maiores -->
+      
+      <div id="timer">
+        Tempo: <p id="contador" style="margin: auto; margin-left: 2%; margin-right: 2%;">0</p> s
+      </div>
+      <!--<p id="pontuacao" class="text-center">Pontuação: 0</p>-->
+    </div>
+  </div>
+  <br>
+  <div id="carregando" class="row container-fluid invisible">
+    <strong id="contador">Começando em 1 ...</strong>
+    <div class="spinner-border text-warning spinner-border-sm" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <br>
+
+  <div id="pergunta" class="row" style="justify-content: center; margin-bottom: 30px;">
+
+  </div>
+
+  <div id="conteudo" class="row">
+
+  </div>
+
+
+  <div class="row container-fluid" style="display:flex; justify-content:right;">
+    <div id="mensagem" class="alert alert-success invisible" role="alert">
+      Combinação!!
+    </div>
+  </div>
+
+ 
+</body>
+
+<script>
+  // Inicializa o contador
+  var segundos = 0;
+
+  // Função para atualizar o contador a cada segundo
+  function atualizarContador() {
+      segundos++;
+      document.getElementById('contador').textContent = segundos;
+  }
+
+  // Configura o intervalo para chamar a função a cada 1000 milissegundos (1 segundo)
+  var intervalID = setInterval(atualizarContador, 1000);
+
+  // Função para adicionar 20 segundos
+  function adicionarSegundos() {
+      segundos += 30;
+      document.getElementById('contador').textContent = segundos;
+  }
+</script>
+
+</html>

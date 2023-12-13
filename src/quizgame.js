@@ -1,11 +1,7 @@
 class quizgame {
-  //se mandar um obj = { tela: 1, idade: 2, etc: 3}
-  //constructor vao ignorar o resto e pegar somente a propriedade desejada
-  //tela
   constructor({ tela, util }) {
     this.tela = tela
     this.util = util
-    //caminho do arquivo sempre relativo ao index.html!!
     this.aleatorias = [
       {img: './arquivos/aleatorias/1.png', id: 1, nome: 'correta'},
       {img: './arquivos/aleatorias/2.png', id: 2, nome: 'correta'},
@@ -66,7 +62,6 @@ class quizgame {
 
   juntaAleatoriasRespostas()
   {
-
     var obj = this.aleatorias;
     var selecionadas = [];
 
@@ -77,20 +72,19 @@ class quizgame {
 
       selecionadas.push(obj[indiceAleatorio]);
 
-      obj.splice(indiceAleatorio, 1);
+      //obj.splice(indiceAleatorio, 1);
     }
 
-    var num = 0;
-    console.log(document.getElementById('secao') != undefined)
+    var num;
     if(document.getElementById('secao') != undefined)
     {
-      if(document.getElementById('secao').innerText == '1')
+      if(parseInt(document.getElementById('secao').innerText) == 1)
       {
         num = 0;
       }
       else
       {
-        num = parseInt(document.getElementById('secao').innerText) + 1;
+        num = parseInt(document.getElementById('secao').innerText) - 1;
       }
     }
 
@@ -106,51 +100,95 @@ class quizgame {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
-}
+  }
 
   escolherPergunta() {
 
     var num = 1;
     if(document.getElementById('secao'))
     {
-      num = document.getElementById('secao').innerText + 1;
+      num = parseInt(document.getElementById('secao').innerText) + 1;
     }
 
     const perguntaSelecionada = this.perguntas.find(({ id }) => num === id)
   
-    this.criarSecao(perguntaSelecionada.id)
+    if(num > 1)
+    {
+      this.atualizaSecao(perguntaSelecionada.id)
+    }
+    else
+    {
+      this.criarSecao(perguntaSelecionada.id)
+    }
     return perguntaSelecionada
       
   }
   
   criarSecao(perguntaSorteada) {
-    // Cria um novo elemento de seção (pode ser qualquer outro tipo de elemento)
     var novaSecao = document.createElement('div');
 
-    // Adiciona uma classe à nova seção para aplicar estilos (opcional)
     novaSecao.classList.add('secao');
     novaSecao.style.display = 'none'; 
     novaSecao.id = 'secao'; 
 
-    // Adiciona algum conteúdo à seção (pode ser texto, HTML, etc.)
     novaSecao.textContent = perguntaSorteada;
 
-    // Adiciona a nova seção ao corpo do documento (ou ao elemento pai desejado)
     document.body.appendChild(novaSecao);
   }
 
-  esconderHerois(herois) {
-    this.tela.atualizarImagens(heroisOcultos)
-    //guardamos os herois para trabalhar com eles depois
-    this.heroisEscondidos = heroisOcultos
+  atualizaSecao(id)
+  {
+    var secao = document.getElementById('secao');
+    secao.textContent = id;
+    document.body.appendChild(secao);
+
   }
 
-  exibirHerois(nomeDoHeroi) {
-    //vamos procurar esse heroi pelo nome em nossos heroisIniciais
-    //vamos obter somente a imagem dele
-    const { img } = this.heroisIniciais.find(({ nome }) => nomeDoHeroi === nome)
-    //vamos criar a funcao na tela, para exibir somente o heroi selecionado
-    this.tela.exibirHerois(nomeDoHeroi, img)
+  proximafase()
+  {
+    var pergunta = this.escolherPergunta()
+
+    switch (pergunta.id) {
+      case 2:
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (Barbadinha)'
+        break;
+      
+      case 3:
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (Normal)'
+        break;
+
+      case 4:
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (Começando a esquentar)'
+        break;
+
+
+      case 5:
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (Ta pegando fogo bixo)'
+        break;
+
+      case 6:
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (Alien)'
+        break;
+      
+      
+      case 7:
+
+      document.getElementById('titulo').innerText =  'Quiz das Matrizes (Semi-Deus)'
+      break;
+
+      case 8:
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (GOD)'
+        break;
+      case 9:
+
+        document.getElementById('titulo').innerText =  'Quiz das Matrizes (Bonus)'
+        break;
+
+    }
+
+
+    this.tela.atualizarPergunta(pergunta)
+    this.tela.atualizarImagens(this.juntaAleatoriasRespostas())
   }
 
   verificarSelecao(id, nome) {
@@ -158,92 +196,24 @@ class quizgame {
 
     if(item.nome == 'resposta')
     {
-      this.proximafase()
+      if(item.id == 9)
+      {
+        alert("Parabens você ganhou!!!! Seu tempo foi de " + document.getElementById('contador').innerText + " Segundos");
+        window.location.href = 'index.html';
+      }
+      else
+      {
+        alert("Você acertou!")
+        this.proximafase()
+        
+       
+      }
     }
-    console.log(item);
-    // //vamos verificar a quantidade de herois selecionados
-    // //e tomar ação se escolheu certo ou errado
-    // const heroisSelecionados = this.heroisSelecionados.length
-    // let itemHTML = document.getElementById(id)
-    // itemHTML.classList.add('border')
-    // itemHTML.classList.add('border-success')
-    // switch(heroisSelecionados) {
-    //   case 0:
-    //     //adiciona a escolha na lista, esperando pela próxima
-    //     //clicada
-    //     this.heroisSelecionados.push(item)
-    //     break;
-    //   case 1:
-    //     itemHTML.classList.remove('border')
-    //     itemHTML.classList.remove('border-success')
-
-    //     this.heroisSelecionados.forEach(item => { 
-    //       itemHTML = document.getElementById(item.id)
-    //       itemHTML.classList.remove('border-3')
-    //     itemHTML.classList.remove('border-success')
-    //     })
-    //     //se a quantidade for 1, significa
-    //     //que o usuario só pode escolher mais um
-    //     //vamos obter o primeiro item da lista
-    //     const [opcao1] = this.heroisSelecionados //extrai somente a posição 0, pois nao foi informado indice
-    //     //zerar itens para nao selecionar mais de dois
-    //     this.heroisSelecionados = []
-    //     //conferimos se os nomes e ids batem conforme
-    //     //o esperado
-
-    //     // Verifica se o par já foi encontrado ou está em processo de verificação
-    //     if (this.paresEncontrados.has(nome) || this.emProcesso) {
-    //       return; // Se o par já foi encontrado ou está em processo de verificação, não faz nada
-    //     }
-
-    //     if (opcao1.nome === item.nome && opcao1.id !== item.id) {
-    //       this.exibirHerois(item.nome);
-    //       this.tela.exibirMensagem();
-
-    //       // Incrementar a pontuação quando houver uma combinação correta
-    //      //this.pontuacao += 10; // Por exemplo, você pode ajustar a pontuação aqui
-    //       //this.atualizarPontuacaoNaTela(); // Chame a função para atualizar a pontuação na tela
-    //       this.paresEncontrados.add(opcao1.nome);
-    //       this.paresEncontrados.add(item.nome);
-
-    //       this.emProcesso = true;
-
-    //       //se achar a resposta correta
-    //       if(this.pontuacao == 40) 
-    //       {
-
-    //         alert("Parabéns você concluiu essa fase!!!!");
-    //       }
-
-    //       setTimeout(() => {
-    //         this.emProcesso = false;
-    //       }, 5000); // Tempo de espera para virar os cartões novamente (1 segundo)
-
-    //       return;
-    //     }
-
-    //     this.tela.exibirMensagem(false)
-    //     //fim do case!
-    //     break;
-    // }
-  }
-
-  // Adicione um método para atualizar a pontuação na tela
-  // atualizarPontuacaoNaTela() {
-  //   const pontuacaoElement = document.getElementById('pontuacao');
-  //   pontuacaoElement.textContent = `Pontuação: ${this.pontuacao}`;
-  // }
-
-  mostrarHeroisEscondidos() {
-    //vamos pegar todos os herois da tela e colocar seu
-    //respectivo valor correto
-    const heroisEscondidos = this.heroisEscondidos
-    for (const heroi of heroisEscondidos) {
-      const { img } = this.heroisIniciais.find(item => item.nome === heroi.nome)
-      heroi.img = img
+    else
+    {
+      alert("Você errou!!! Foi adicionado 30 segundos em seu tempo!!")
+      adicionarSegundos()
     }
-    this.tela.atualizarImagens(heroisEscondidos)
   }
-
 
 }
